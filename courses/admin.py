@@ -18,8 +18,8 @@ class SectionInline(admin.TabularInline):
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     
-    list_display = ['name','is_popular','is_trending','description','image','rating','number_of_hours']
-    fields = ["name", 'is_popular','is_trending','description','image','rating','instructor','number_of_hours']
+    list_display = ['name','is_popular','is_trending','description','image','rating','number_of_hours','price']
+    fields = ["name", 'is_popular','is_trending','description','image','rating','instructor','number_of_hours','price']
     readonly_fields=['number_of_hours']
     inlines = [SectionInline]
 
