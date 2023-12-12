@@ -17,11 +17,15 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-
+from djoser import views as djoser_views
+from djoser.urls.jwt import views as jwt_views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
-    path("auth/",include("djoser.urls")),
-    path("auth/",include("djoser.urls.jwt")),
+    path("register/",djoser_views.UserViewSet.as_view({'post':"create"}),name='register'),
+    path("auth/",jwt_views.TokenObtainPairView.as_view(),name='login'),
+    path("refresh/",jwt_views.TokenRefreshView.as_view(),name='refresh'),
+    path("verify/",jwt_views.TokenVerifyView.as_view(),name='verify'),
+    # path("auth/",include("djoser.urls")),
+    # path("auth/",include("djoser.urls.jwt")),
     path("courses/",include("courses.urls")),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
