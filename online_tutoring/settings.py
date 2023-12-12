@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "djoser",
     "courses",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -87,7 +88,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-# CORS_ALLOWED_ORIGINS=["*"]
+# CORS_ALLOWED_ORIGINS=["http://192.168.1.9:3000/"]
+
+CORS_ORIGIN_WHITELIST = ['https://06b7-102-188-158-36.ngrok-free.app']
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS=["http://locahost:3000",
+                        "https://06b7-102-188-158-36.ngrok-free.app",
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -148,7 +155,6 @@ SIMPLE_JWT = {
 DJOSER ={ 
     "SERIALIZERS":{
         "user_create":"CustomAuth.serializers.UserCreateSerializer",
-     'REGISTER': 'register',   
     }
 
 }
