@@ -18,10 +18,9 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from djoser import views as djoser_views
-from djoser.urls.jwt import views as jwt_views
+from djoser.urls.jwt import urlpatterns as jwt_patterns
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path("register/",djoser_views.UserViewSet.as_view({'post':"create",""}),name='register'),
     # path("auth/",jwt_views.TokenObtainPairView.as_view(),name='login'),
     # path("refresh/",jwt_views.TokenRefreshView.as_view(),name='refresh'),
     # path("verify/",jwt_views.TokenVerifyView.as_view(),name='verify'),
