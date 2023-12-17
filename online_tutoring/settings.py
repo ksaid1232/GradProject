@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,13 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     "corsheaders",
-    "CustomAuth",
+    # "CustomAuth",
     "rest_framework",
-    "djoser",
-    "courses",
-    "users",
+    # "courses",
+    # "users",
+    'djoser',
+    "core",
 ]
+
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -78,7 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'online_tutoring.wsgi.application'
 
-APPEND_SLASH = False
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -89,13 +93,44 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-# CORS_ALLOWED_ORIGINS=["http://192.168.1.9:3000/"]
 
-CORS_ORIGIN_WHITELIST = ['https://06b7-102-188-158-36.ngrok-free.app']
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS=["http://locahost:3000",
                         "https://06b7-102-188-158-36.ngrok-free.app",
 ]
+
+
+SIMPLE_JWT = {
+
+   'AUTH_HEADER_TYPES': ('JWT',),
+   "TOKEN_OBTAIN_SERIALIZER": "core.serializers.MyTokenObtainPairSerializer"
+}
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create':"core.serializers.UserCreateSerializer",
+    },
+    # 'HIDE_USERS': False,
+    # Other Djoser settings...
+}
+
+SITE_ID=1
+AUTH_USER_MODEL = 'core.User'
+
+
+
+
+
+
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -141,21 +176,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-REST_FRAMEWORK = {
-    "COERCE_DECIMAL_TO_STRING":False,
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
+# REST_FRAMEWORK = {
+#     "COERCE_DECIMAL_TO_STRING":False,
+#     # 'DEFAULT_AUTHENTICATION_CLASSES': (
+#     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     # ),
+# }
 
-SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
-   "TOKEN_OBTAIN_SERIALIZER": "CustomAuth.serializers.MyTokenObtainPairSerializer",
-}
-
-DJOSER ={ 
-    "SERIALIZERS":{
-        "user_create":"CustomAuth.serializers.UserCreateSerializer",
-    }
-
-}
